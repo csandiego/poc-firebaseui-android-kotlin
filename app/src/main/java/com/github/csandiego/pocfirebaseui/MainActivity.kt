@@ -9,15 +9,8 @@ import com.google.firebase.auth.FirebaseAuth
 class MainActivity : AppCompatActivity() {
 
     private val listener = FirebaseAuth.AuthStateListener { auth ->
-        if (auth.currentUser == null) {
-            startActivityForResult(
-                AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(listOf(AuthUI.IdpConfig.EmailBuilder().build(), AuthUI.IdpConfig.GoogleBuilder().build())).build(),
-                100
-            )
-        } else {
-            startActivity(Intent(this, HomeActivity::class.java))
-            finish()
-        }
+        startActivity(Intent(this, auth.currentUser?.let { HomeActivity::class.java } ?: LoginActivity::class.java))
+        finish()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
