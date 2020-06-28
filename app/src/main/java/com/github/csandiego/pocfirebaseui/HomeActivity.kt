@@ -2,10 +2,13 @@ package com.github.csandiego.pocfirebaseui
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.firebase.ui.auth.AuthUI
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.auth.FirebaseAuth
+
 
 class HomeActivity : AppCompatActivity() {
 
@@ -19,9 +22,11 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        findViewById<Button>(R.id.logoutButton).setOnClickListener {
-            AuthUI.getInstance().signOut(this)
-        }
+
+        val navController = findNavController(R.id.navHostFragment)
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        findViewById<Toolbar>(R.id.toolbar)
+            .setupWithNavController(navController, appBarConfiguration)
     }
     override fun onResume() {
         super.onResume()
